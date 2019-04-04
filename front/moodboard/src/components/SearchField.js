@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Box, Icon, SearchField, Text, Button } from 'gestalt';
 import 'gestalt/dist/gestalt.css';
+import SignupModal from './SignupModal';
+import LoginModal from './LoginModal';
 
 class SearchFieldComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { 
+      value: '',
+    };
   }
 
   render() {
@@ -30,10 +34,12 @@ class SearchFieldComponent extends Component {
           />
         </Box>
         <Box paddingX={2}>
-          <Button color="white" text="Sign Up" />
+          {/* <Button color="white" text="Sign Up" /> */}
+          <SignupModal />
         </Box>
         <Box paddingX={2}>
-          <Button color="blue" text="Login" />
+          {/* <Button color="blue" text="Login" /> */}
+          <LoginModal />
         </Box>
       </Box>
     );
