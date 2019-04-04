@@ -87,18 +87,21 @@ class Collage extends Component {
     const imagens = pictures.map((item) => {
       if (item.naturalWidth == item.naturalHeight) {
         return {
+          alt: item.alt,
           src: item.src,
           width: 1,
           height: 1
         }
       } else if (item.naturalWidth > item.naturalHeight) {
         return {
+          alt: item.alt,
           src: item.src,
           width: 4,
           height: 3
         }
       } else {
         return {
+          alt: item.alt,
           src: item.src,
           width: 3,
           height: 4
