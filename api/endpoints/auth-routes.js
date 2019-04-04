@@ -8,8 +8,7 @@ const authRoutes = express.Router();
 
 authRoutes.post('/signup', (req, res) => {
   const { username, password, name } = req.body;
-  console.log(name, username, password);
-
+  console.log(username, password, name);
   const errors = {};
 
   if (!name) {
@@ -25,7 +24,6 @@ authRoutes.post('/signup', (req, res) => {
   }
 
   if (Object.keys(errors).length !== 0) {
-    console.log(errors);
     res.status(422).json(errors);
     return;
   }
@@ -56,8 +54,8 @@ authRoutes.post('/signup', (req, res) => {
         return;
       }
 
-      req.login(aNewUser, (err) => {
-        if (err) {
+      req.login(aNewUser, (er) => {
+        if (er) {
           res.status(500).json({ message: 'Não foi possível logar após o cadastro.' });
           return;
         }
@@ -81,8 +79,8 @@ authRoutes.post('/login', (req, res, next) => {
       return;
     }
 
-    req.login(theUser, (err) => {
-      if (err) {
+    req.login(theUser, (er) => {
+      if (er) {
         res.status(500).json({ message: 'Session save went bad.' });
         return;
       }

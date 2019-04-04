@@ -10,12 +10,12 @@ cloudinary.config({
 
 const storage = cloudinaryStorage({
   cloudinary,
-  folder: 'photos-application-aluguel',
-  allowedFormats: ['jpg', 'png'],
+  folder: 'photos-application-moodboard',
+  allowedFormats: ['jpg', 'png', 'jpeg'],
   filename(req, file, cb) {
     console.log(file);
     cb(null, file.signature);
-  },
+  }
 });
 
 const parser = multer({ storage });

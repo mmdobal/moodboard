@@ -3,9 +3,12 @@ const express = require('express');
 const router = express.Router();
 const PictureModel = require('../models/Picture');
 
-router.post('/new/:userId', (req, res) => {
-  const { alt, src, naturalHeight, naturalWidth } = req.body;
+const uploader = require('../config/cloudinary');
+
+router.post('/new/:userId', uploader.single('src'), (req, res) => {
+  const { alt, naturalHeight, naturalWidth } = req.body;
   const { userId } = req.params;
+  const src = req.file.url;
   const color = 'rgb(137, 175, 237)';
 
   const errors = {};
