@@ -1,12 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
-const PictureModel = require('../models/Picture');
+const Picture = require('../models/Picture');
 
 const uploader = require('../config/cloudinary');
 
 router.post('/new/:userId', uploader.single('src'), (req, res) => {
-  const { alt } = req.body;
+  const { alt, naturalHeight, naturalWidth } = req.body;
   const { userId } = req.params;
   const src = req.file.url;
   const color = 'rgb(137, 175, 237)';
@@ -22,7 +22,7 @@ router.post('/new/:userId', uploader.single('src'), (req, res) => {
     return;
   }
 
-  const newPicture = new PictureModel({ userId, alt, src, color });
+  const newPicture = new Picture({ userId, alt, src, color, naturalHeight, naturalWidth });
 
   newPicture.save()
     .then((message) => {
@@ -36,7 +36,7 @@ router.post('/new/:userId', uploader.single('src'), (req, res) => {
 
 // Search pictures by user id
 router.get('/find/:userId', (req, res) => {
-  PictureModel.find({ userId: req.params.userId })
+  Picture.find({ userId: req.params.userId })
     .then((pictures) => {
       if (pictures.length) {
         res.status(200).json(pictures);
@@ -47,6 +47,18 @@ router.get('/find/:userId', (req, res) => {
     .catch((err) => {
       console.error(err);
       res.status(400).json({ message: 'Insira um id de usuário válido.' });
+    });
+});
+
+// Delete picture
+router.delete('/del/:id', (req, res) => {
+  Picture.deleteOne({ _id: req.params.id })
+    .then((picture) => {
+      res.status(204).json({ picture });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(404).json({ message: 'Não foi possível deletar a foto' });
     });
 });
 
