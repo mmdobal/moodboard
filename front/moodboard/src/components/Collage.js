@@ -104,7 +104,7 @@ class Collage extends Component {
     
     return (
       //  <Gallery photos={photos} />
-      <Gallery photos={imagens} columns={columns} />
+      <Gallery photos={photos} columns={columns} />
 
     )
   }

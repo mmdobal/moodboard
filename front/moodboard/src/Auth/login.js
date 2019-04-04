@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import AuthService from './auth-service';
 import { Redirect } from 'react-router-dom';
-
+import { Button, TextField, Box, Label, Text } from 'gestalt';
 
 class Login extends Component {
 
   constructor(props) {
     super(props);
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.state = {
       username: "",
       password: ""
@@ -18,15 +20,25 @@ class Login extends Component {
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
-    console.log(this.state)
   };
 
+  handleUsernameChange({ value }) {
+    this.setState({ username: value });
+    console.log(this.state);
+  }
+
+  handlePasswordChange({ value }) {
+    this.setState({ password: value });
+  }
+
   handleFormSubmit(event) {
+    const { handleToggleModal } = this.props;
     event.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
     this.service.login(username, password)
       .then(response => {
+        handleToggleModal();
         this.setState({ username: "", password: "", redirect: <Redirect to='/' /> });
         this.props.getUser(response);
       })
@@ -37,17 +49,42 @@ class Login extends Component {
     return (
       <div>
         <form onSubmit={this.handleFormSubmit} >
-          <div className="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input onChange={this.handleChange('username')} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="insira o email" />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Senha</label>
-            <input onChange={this.handleChange('password')} type="password" className="form-control" id="exampleInputPassword1" placeholder="insira a senha" />
-          </div>
-          <div className='text-center'>
-            <button type='submit'>Entrar</button>
-          </div>
+        <Box>
+          <Box marginBottom={2} marginTop={2}>
+            <Label htmlFor="email">
+              <Text>Email</Text>
+            </Label>
+          </Box>
+          <TextField
+            id="username"
+            name="username"
+            onChange={this.handleUsernameChange}
+            placeholder="Email Address"
+            value={this.state.username}
+            type="email"
+          />
+          <Box marginBottom={2} marginTop={2}>
+            <Label htmlFor="password">
+              <Text>Password</Text>
+            </Label>
+          </Box>
+          <TextField
+            id="password"
+            name="password"
+            onChange={this.handlePasswordChange}
+            placeholder="Password"
+            value={this.state.password}
+            type="password"
+          />
+        </Box>
+        <Box marginBottom={4} marginTop={4}>
+          <Button
+            size="lg"
+            color="blue"
+            text="Send"
+            type='submit'
+          />
+        </Box>
         </form>
       </div >
     );
