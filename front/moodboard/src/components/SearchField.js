@@ -13,6 +13,8 @@ class SearchFieldComponent extends Component {
   }
 
   render() {
+    // console.log(this.state.value);
+    
     return (
       <Box color="white" shape="rounded" padding={3} display="flex" direction="row" alignItems="center">
         <Box padding={3}>
@@ -28,9 +30,9 @@ class SearchFieldComponent extends Component {
             color='red'
             accessibilityLabel="Demo Search Field"
             id="searchField"
-            onChange={({ value }) => this.setState({ value })}
+            onChange={({ value }) => this.props.handleChangeSearch({ value })}
             placeholder="Search and explore"
-            value={this.state.value}
+            value={this.props.value}
           />
         </Box>
         <Box paddingX={2}>
