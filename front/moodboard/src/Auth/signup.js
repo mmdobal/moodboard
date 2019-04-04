@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
 import AuthService from './auth-service';
 import { Redirect } from 'react-router-dom';
+import { Button, TextField, Box, Label, Text } from 'gestalt';
+import 'gestalt/dist/gestalt.css';
 
 class Signup extends Component {
     constructor() {
       super();
+      this.handleUsernameChange = this.handleUsernameChange.bind(this);
+      this.handleNameChange = this.handleNameChange.bind(this);
+      this.handlePasswordChange = this.handlePasswordChange.bind(this);
       this.state = {
         name: "",
         username: "",
         password: "",
         redirect: null
       };
-      this.updateState = this.updateState.bind(this);
       this.handleFormSubmit = this.handleFormSubmit.bind(this);
       this.service = new AuthService();
     }
-  
-    updateState(e) {
-      const { name, value } = e.currentTarget;
-      this.setState({ [name]: value }, () => {
-        console.log(this.state);
-      });
+
+    handleNameChange({ value }) {
+      this.setState({ name: value });
+      console.log(this.state);
+    }
+
+    handleUsernameChange({ value }) {
+      this.setState({ username: value });
+      console.log(this.state);
+    }
+
+    handlePasswordChange({ value }) {
+      this.setState({ password: value });
     }
   
     handleFormSubmit(event) {
       event.preventDefault();
-      const { username, password, name, state } = this.state;
-      const { getUser } = this.props;
-      this.service.signup(username, password, name, state)
+      const { username, password, name } = this.state;
+      const { getUser, handleToggleModal } = this.props;
+      this.service.signup(username, password, name)
         .then((response) => {
+          handleToggleModal();
           this.setState({
             username: '',
             password: '',
-            state: '',
             name: ''
           });
           getUser(response);
@@ -47,43 +58,57 @@ class Signup extends Component {
       const r = this.state.redirect !== null ? this.state.redirect : false;
       return (
         <div className="App">
-					<div className='w-75 mx-auto margin-top-bottom-20'>
-						<h5 className='text-center'>Cadastrar-se</h5>
-						<form onSubmit={this.handleFormSubmit} >
-							<div className="form-group">
-								<label for="">Nome</label>
-								<input onChange={e => this.updateState(e)} value={this.state.name} type="text" placeholder="Name" name="name" />
-							</div>
-
-							<div className="form-group">
-								<label for="">E-mail</label>
-
-								<input
-									className="input"
-									onChange={e => this.updateState(e)}
-									value={this.state.username}
-									type="email"
-									placeholder="E-mail"
-									name="username"
-								/>
-							</div>
-
-							<div className="form-group">
-								<label for="exampleInputPassword1">Senha</label>
-								<input
-									className="input"
-									onChange={e => this.updateState(e)}
-									value={this.state.password}
-									type="password"
-									placeholder="Password"
-									name="password"
-								/>
-							</div>
-							<div className='text-center'>
-								<button type='submit'>Enviar</button>
-							</div>
+						<form onSubmit={this.handleFormSubmit}>
+            <Box>
+              <Box marginBottom={2}>
+                <Label htmlFor="name">
+                  <Text>Name</Text>
+                </Label>
+              </Box>
+              <TextField
+                id="name"
+                name="name"
+                onChange={this.handleNameChange}
+                placeholder="Name"
+                value={this.state.name}
+                type="text"
+              />
+              <Box marginBottom={2} marginTop={2}>
+                <Label htmlFor="email">
+                  <Text>Email</Text>
+                </Label>
+              </Box>
+              <TextField
+                id="username"
+                name="username"
+                onChange={this.handleUsernameChange}
+                placeholder="Email Address"
+                value={this.state.username}
+                type="email"
+              />
+              <Box marginBottom={2} marginTop={2}>
+                <Label htmlFor="password">
+                  <Text>Password</Text>
+                </Label>
+              </Box>
+              <TextField
+                id="password"
+                name="password"
+                onChange={this.handlePasswordChange}
+                placeholder="Password"
+                value={this.state.password}
+                type="password"
+              />
+            </Box>
+            <Box marginBottom={4} marginTop={4}>
+              <Button
+                size="lg"
+                color="blue"
+                text="Send"
+                type='submit'
+              />
+            </Box>
 						</form>
-					</div>
         </div >
       );
     }

@@ -109,6 +109,11 @@ class Collage extends Component {
       }
     });
 
+    // console.log(imagens);
+    
+    // return (
+    //   //  <Gallery photos={photos} />
+    //   <Gallery photos={photos} columns={columns} />
 
     return (
       <Gallery photos={imagens} columns={this.columns} />

@@ -32,35 +32,11 @@ class SignupModal extends Component {
 							accessibilityModalLabel="Would you like to block Chris?"
 							heading="Signup"
 							onDismiss={this.handleToggleModal}
-							footer={
-								<Box
-									display="flex"
-									marginLeft={-1}
-									marginRight={-1}
-									justifyContent="end"
-								>
-									<Box padding={1}>
-										<Button
-											size="lg"
-											text="Cancel"
-											onClick={this.handleToggleModal}
-										/>
-									</Box>
-									<Box padding={1}>
-										<Button
-											size="lg"
-											color="red"
-											text="Block"
-											onClick={this.handleToggleModal}
-										/>
-									</Box>
-								</Box>
-							}
                 role="alertdialog"
                 size="sm"
               >
 							<Box paddingX={4} paddingY={2}>
-								<Signup />
+								<Signup handleToggleModal={this.handleToggleModal} />
 							</Box>
 						</Modal>
 					)}
