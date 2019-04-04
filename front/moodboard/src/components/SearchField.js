@@ -31,9 +31,9 @@ class SearchFieldComponent extends Component {
       <Box color="white" shape="rounded" padding={3} display="flex" direction="row" alignItems="center">
         <Box padding={3}>
           <Icon
-            icon="pinterest"
-            color="red"
-            size={20}
+            icon="angled-pin"
+            color="blue"
+            size={30}
             accessibilityLabel="Pinterest"
           />
         </Box>
