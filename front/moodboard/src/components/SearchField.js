@@ -7,14 +7,26 @@ import LoginModal from './LoginModal';
 class SearchFieldComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       value: '',
     };
   }
 
   render() {
-    // console.log(this.state.value);
-    
+    console.log(this.props.loggedInUser);
+    const modalLoginLogged = this.props.loggedInUser ?
+      false :
+      <Box paddingX={2}>
+        <LoginModal getUser={this.props.getUser} />
+      </Box>;
+
+    const modalSignUpLogged = this.props.loggedInUser ?
+      false :
+      <Box paddingX={2}>
+        <SignupModal getUser={this.props.getUser} />
+      </Box>
+      ;
+
     return (
       <Box color="white" shape="rounded" padding={3} display="flex" direction="row" alignItems="center">
         <Box padding={3}>
@@ -35,15 +47,11 @@ class SearchFieldComponent extends Component {
             value={this.props.value}
           />
         </Box>
-        <Box paddingX={2}>
-          {/* <Button color="white" text="Sign Up" /> */}
-          <SignupModal />
-        </Box>
-        <Box paddingX={2}>
-          {/* <Button color="blue" text="Login" /> */}
-          <LoginModal />
-        </Box>
+
+        {modalSignUpLogged}
+        {modalLoginLogged}
       </Box>
+
     );
   }
 }

@@ -41,7 +41,7 @@ class Home extends Component {
 
     return (
       <div>
-        <SearchFieldComponent handleChangeSearch={this.handleChange} value={this.props.value} />
+        <SearchFieldComponent loggedInUser={this.props.loggedInUser} handleChangeSearch={this.handleChange} value={this.props.value} getUser={this.props.getUser} />
         <Collage pictures={listFiltered} />
       </div>
     )
