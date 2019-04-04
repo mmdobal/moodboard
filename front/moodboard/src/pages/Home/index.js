@@ -20,7 +20,7 @@ class Home extends Component {
 
 
   componentDidMount() {
-    axios.get('http://localhost:8080/api/pictures/')
+    axios.get('http://192.168.15.53:8080/api/pictures/')
       .then((response) => {
         const pictures = response.data;
         this.setState({ pictures });

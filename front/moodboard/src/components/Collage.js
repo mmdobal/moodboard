@@ -12,14 +12,14 @@ class Collage extends Component {
     this.columns = this.columns.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8080/api/pictures/')
-      .then((response) => {
-        const pictures = response.data;
-        this.setState({ pictures });
-      })
-      .catch(err => console.log(err));
-  }
+  // componentDidMount() {
+  //   axios.get('http://localhost:8080/api/pictures/')
+  //     .then((response) => {
+  //       const pictures = response.data;
+  //       this.setState({ pictures });
+  //     })
+  //     .catch(err => console.log(err));
+  // }
 
   columns(containerWidth) {
     let columns = 2;
