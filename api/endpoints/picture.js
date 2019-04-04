@@ -5,8 +5,8 @@ const Picture = require('../models/Picture');
 
 const uploader = require('../config/cloudinary');
 
-router.post('/new/:userId', uploader.single('src'), (req, res) => {
-  const { alt, naturalHeight, naturalWidth } = req.body;
+router.post('/users/:userId', uploader.single('src'), (req, res) => {
+  const { alt, naturalWidth, naturalHeight } = req.body;
   const { userId } = req.params;
   const src = req.file.url;
   const color = 'rgb(137, 175, 237)';
@@ -34,8 +34,19 @@ router.post('/new/:userId', uploader.single('src'), (req, res) => {
     });
 });
 
+router.get('/', (req, res) => {
+  Picture.find()
+    .then((pictures) => {
+      res.status(200).json(pictures);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(400).json({ message: 'Insira um id de usuário válido.' });
+    });
+});
+
 // Search pictures by user id
-router.get('/find/:userId', (req, res) => {
+router.get('/users/:userId', (req, res) => {
   Picture.find({ userId: req.params.userId })
     .then((pictures) => {
       if (pictures.length) {
@@ -51,7 +62,7 @@ router.get('/find/:userId', (req, res) => {
 });
 
 // Delete picture
-router.delete('/del/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   Picture.deleteOne({ _id: req.params.id })
     .then((picture) => {
       res.status(204).json({ picture });
